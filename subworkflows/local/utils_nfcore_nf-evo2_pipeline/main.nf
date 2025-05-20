@@ -67,8 +67,9 @@ workflow PIPELINE_INITIALISATION {
 
     Channel
         .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
-        .map { samplesheet ->
-            validateInputSamplesheet(samplesheet)
+        .map {
+            meta, parquet -> 
+                [ meta, file(parquet) ]
         }
         .set { ch_samplesheet }
 
@@ -115,7 +116,7 @@ workflow PIPELINE_COMPLETION {
 // Validate channels from input samplesheet
 //
 def validateInputSamplesheet(input) {
-    def (metas, parquets) = input[1..2]
+    def (metas, parquets) = input[0..1]
 
-    return [ metas[0], parquets[0]
+    return [ metas[0], parquets[0] ]
 }

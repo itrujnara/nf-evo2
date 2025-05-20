@@ -13,7 +13,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { NF-EVO2  } from './workflows/nf-evo2'
+include { NFEVO2  } from './workflows/nf-evo2'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_nf-evo2_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_nf-evo2_pipeline'
 /*
@@ -25,7 +25,7 @@ include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_nf-e
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow ITRUJNARA_NF-EVO2 {
+workflow ITRUJNARA_NFEVO2 {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -35,7 +35,7 @@ workflow ITRUJNARA_NF-EVO2 {
     //
     // WORKFLOW: Run pipeline
     //
-    NF-EVO2 (
+    NFEVO2 (
         samplesheet
     )
 }
@@ -63,7 +63,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    ITRUJNARA_NF-EVO2 (
+    ITRUJNARA_NFEVO2 (
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //
