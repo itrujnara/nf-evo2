@@ -3,6 +3,8 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+include { MAKECHUNKS             } from '../modules/local/makechunks/main.nf'
+
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 
@@ -20,7 +22,11 @@ workflow NFEVO2 {
 
     ch_versions = Channel.empty()
 
-    ch_samplesheet.view()
+    MAKECHUNKS(ch_samplesheet)
+
+    ch_versions.mix(MAKECHUNKS.out.versions)
+
+    MAKECHUNKS.out.parquet.view()
 
     //
     // Collate and save software versions
